@@ -18,4 +18,4 @@ issues_url 'https://github.com/jimbodragon/infra_chef/issues'
 #
 source_url 'https://github.com/jimbodragon/infra_chef'
 
-cookbook
+depends infraClass

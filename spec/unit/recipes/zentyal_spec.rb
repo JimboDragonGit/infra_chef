@@ -1,7 +1,16 @@
 #
 # Cookbook:: infra_chef
-# Recipe:: default
-#
+# Spec:: zentyal
+# name 'Recipe SPEC file for infra_chef'
+# maintainer 'Jimbo Dragon'
+# maintainer_email 'jimbo_dragon@hotmail.com'
+# license ''
+# description 'Recipe SPEC file for infra_chef'
+# version '0.1.0'
+# chef_version '>= 15.0'
+# issues_url 'https://github.com/jimbodragon/infra_chef/issues'
+# source_url 'https://github.com/jimbodragon/infra_chef'
+
 # The MIT License (MIT)
 #
 # Copyright:: 2020, Jimbo Dragon
@@ -24,4 +33,26 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-include_recipe "#{cookbook_name}::zentyal"
+require 'spec_helper'
+
+describe 'infra_chef::zentyal' do
+  context 'When all attributes are default, on Ubuntu 20.04' do
+    # for a complete list of available platforms and versions see:
+    # https://github.com/chefspec/fauxhai/blob/master/PLATFORMS.md
+    platform 'ubuntu', '20.04'
+
+    it 'converges successfully' do
+      expect { chef_run }.to_not raise_error
+    end
+  end
+
+  context 'When all attributes are default, on CentOS 8' do
+    # for a complete list of available platforms and versions see:
+    # https://github.com/chefspec/fauxhai/blob/master/PLATFORMS.md
+    platform 'centos', '8'
+
+    it 'converges successfully' do
+      expect { chef_run }.to_not raise_error
+    end
+  end
+end
