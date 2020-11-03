@@ -21,4 +21,4 @@ source_url 'https://github.com/jimbodragon/infra_chef'
 supports ubuntu
 supports debian
 
-depends infraClass
+depends 'infraClass'
