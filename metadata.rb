@@ -22,3 +22,6 @@ supports ubuntu
 supports debian
 
 depends 'infraClass'
+depends 'virtualbox-install'
+depends 'vagrant'
+depends 'docker'

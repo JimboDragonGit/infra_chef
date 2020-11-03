@@ -1,13 +1,13 @@
 #
 # Cookbook:: infra_chef
-# Recipe:: zentyal
+# Recipe:: virtualbox
 # name 'Recipe file for infra_chef'
 # maintainer 'Jimbo Dragon'
 # maintainer_email 'jimbo_dragon@hotmail.com'
 # license ''
 # description 'Recipe file for infra_chef'
 # version '0.1.0'
-# chef_version '>= 15.0'
+# chef_version '>= 16.6.14'
 # issues_url 'https://github.com/jimbodragon/infra_chef/issues'
 # source_url 'https://github.com/jimbodragon/infra_chef'
 
@@ -33,30 +33,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-
-# extend Infraclass::BasevmHelpers
-# extend Infraclass::EnvironmentHelpers
-# extend Infraclass::VagrantConfigHelpers
-# extend Infraclass::VboxproviderHelpers
-# extend Infraclass::VboxvmHelpers
-# extend Infraclass::VirtualmachineHelpers
-# extend Infraclass::VirtualmachineproviderHelpers
-# extend Infraclass::VmprovidedHelpers
-# extend Infraclass::VmwithharddrivesHelpers
-# extend Infraclass::VmwithnicsHelpers
-# extend Infraclass::VsphereproviderHelpers
-# extend Infraclass::VspherevmHelpers
-
-package 'dmidecode'
-
-include_recipe "#{cookbook_name}::virtualbox"
-# include_recipe "#{cookbook_name}::vagrant"
-# include_recipe "#{cookbook_name}::docker"
-
-include_recipe "infraClass::genericinfo"
-
-
-# Install VBox, Vagrant and Docker
-# Install Adding require images
-# Install Dropbox
-# Building Chef server
+include_recipe "virtualbox-install::default"
+include_recipe "virtualbox-install::systemservice"
+# include_recipe "virtualbox-install::webportal"

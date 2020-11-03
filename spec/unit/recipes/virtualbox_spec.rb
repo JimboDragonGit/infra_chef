@@ -1,13 +1,13 @@
 #
 # Cookbook:: infra_chef
-# Recipe:: zentyal
-# name 'Recipe file for infra_chef'
+# Spec:: virtualbox
+# name 'Recipe SPEC file for infra_chef'
 # maintainer 'Jimbo Dragon'
 # maintainer_email 'jimbo_dragon@hotmail.com'
 # license ''
-# description 'Recipe file for infra_chef'
+# description 'Recipe SPEC file for infra_chef'
 # version '0.1.0'
-# chef_version '>= 15.0'
+# chef_version '>= 16.6.14'
 # issues_url 'https://github.com/jimbodragon/infra_chef/issues'
 # source_url 'https://github.com/jimbodragon/infra_chef'
 
@@ -33,30 +33,26 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+require 'spec_helper'
 
-# extend Infraclass::BasevmHelpers
-# extend Infraclass::EnvironmentHelpers
-# extend Infraclass::VagrantConfigHelpers
-# extend Infraclass::VboxproviderHelpers
-# extend Infraclass::VboxvmHelpers
-# extend Infraclass::VirtualmachineHelpers
-# extend Infraclass::VirtualmachineproviderHelpers
-# extend Infraclass::VmprovidedHelpers
-# extend Infraclass::VmwithharddrivesHelpers
-# extend Infraclass::VmwithnicsHelpers
-# extend Infraclass::VsphereproviderHelpers
-# extend Infraclass::VspherevmHelpers
+describe 'infra_chef::virtualbox' do
+  context 'When all attributes are default, on Ubuntu 20.04' do
+    # for a complete list of available platforms and versions see:
+    # https://github.com/chefspec/fauxhai/blob/master/PLATFORMS.md
+    platform 'ubuntu', '20.04'
 
-package 'dmidecode'
+    it 'converges successfully' do
+      expect { chef_run }.to_not raise_error
+    end
+  end
 
-include_recipe "#{cookbook_name}::virtualbox"
-# include_recipe "#{cookbook_name}::vagrant"
-# include_recipe "#{cookbook_name}::docker"
+  context 'When all attributes are default, on CentOS 8' do
+    # for a complete list of available platforms and versions see:
+    # https://github.com/chefspec/fauxhai/blob/master/PLATFORMS.md
+    platform 'centos', '8'
 
-include_recipe "infraClass::genericinfo"
-
-
-# Install VBox, Vagrant and Docker
-# Install Adding require images
-# Install Dropbox
-# Building Chef server
+    it 'converges successfully' do
+      expect { chef_run }.to_not raise_error
+    end
+  end
+end
