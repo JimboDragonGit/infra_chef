@@ -4,7 +4,7 @@ maintainer_email 'jimbo_dragon@hotmail.com'
 license 'MIT'
 description 'Installs/Configures infra_chef'
 version '0.1.0'
-chef_version '>= 14.0'
+chef_version '>= 16.6.14'
 
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when
@@ -17,5 +17,8 @@ issues_url 'https://github.com/jimbodragon/infra_chef/issues'
 # a Supermarket.
 #
 source_url 'https://github.com/jimbodragon/infra_chef'
+
+supports ubuntu
+supports debian
 
 depends infraClass

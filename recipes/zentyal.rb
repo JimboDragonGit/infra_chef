@@ -47,6 +47,8 @@ extend Infraclass::VmwithnicsHelpers
 extend Infraclass::VsphereproviderHelpers
 extend Infraclass::VspherevmHelpers
 
+package 'dmidecode'
+
 
 # Install VBox, Vagrant and Docker
 # Install Adding require images
