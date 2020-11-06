@@ -35,4 +35,4 @@
 
 include_recipe "virtualbox-install::default"
 include_recipe "virtualbox-install::systemservice"
-# include_recipe "virtualbox-install::webportal"
+include_recipe "virtualbox-install::webportal"
