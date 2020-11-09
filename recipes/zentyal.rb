@@ -47,16 +47,40 @@
 # extend Infraclass::VsphereproviderHelpers
 # extend Infraclass::VspherevmHelpers
 
+extend Infraclass::VmHelpers
+
 package 'dmidecode'
 
-include_recipe "#{cookbook_name}::virtualbox"
+include_recipe "virtualbox-install::default"
+include_recipe "virtualbox-install::systemservice"
+include_recipe "virtualbox-install::webportal"
+
+Chef::Log.info("Install VBox, Vagrant and Docker")
+vagrant 'Vagrant'
+
 # include_recipe "#{cookbook_name}::vagrant"
 # include_recipe "#{cookbook_name}::docker"
 
-include_recipe "infraClass::genericinfo"
+# include_recipe "infraClass::genericinfo"
 
+%w('net-ping', 'chef-provisioning', 'chef-provisioning-vagrant').each do |gem_package|
+  chef_gem gem_package do
+    compile_time true
+  end
+end
 
-# Install VBox, Vagrant and Docker
-# Install Adding require images
-# Install Dropbox
-# Building Chef server
+Chef::Log.info("Install Adding require images")
+Chef::Log.info("Install Dropbox")
+
+vboxprovider = VBoxProvider.new("zentyal_vbox_provider")
+prod_env = Environment.new("prod", vboxprovider)
+test_env = Environment.new("test", vboxprovider)
+
+Chef::Log.info("Adding VMs to environment")
+prod_env.addVM(node['infra_chef']['vms']['chefserver'])
+
+Chef::Log.info("Building Chef server")
+
+Chef::Log.info("Bootstrap this machine to chef server")
+
+Chef::Log.info("Build the infra")
