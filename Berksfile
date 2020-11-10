@@ -27,5 +27,6 @@
 # frozen_string_literal: true
 source 'https://supermarket.chef.io'
 cookbook 'infraClass', '~> 0.1.0', github: "jimbodragon/infraClass"
+cookbook 'virtualbox', '~> 0.1.0', github: "jimbodragon/virtualbox"
 
 metadata
