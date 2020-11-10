@@ -27,5 +27,6 @@
 # frozen_string_literal: true
 source 'https://supermarket.chef.io'
 cookbook 'infraClass', '~> 0.1.0', github: "jimbodragon/infraClass"
+cookbook 'chef-virtualbox-install', '~> 4.0.0', github: "jimbodragon/chef-virtualbox-install"
 
 metadata
