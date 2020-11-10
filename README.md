@@ -9,4 +9,4 @@ issues_url 'https://github.com/jimbodragon/infra_chef/issues'
 source_url 'https://github.com/jimbodragon/infra_chef' -->
 
 
-A chef cookbook develop to create a full integration system.
+A chef cookbook develop to create a full integration system developped with Chef.
