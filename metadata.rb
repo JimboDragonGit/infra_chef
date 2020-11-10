@@ -23,6 +23,6 @@ supports debian
 
 depends 'infraClass'
 
-depends 'virtualbox-install'
+depends 'virtualbox'
 depends 'vagrant'
 depends 'docker'

@@ -51,9 +51,9 @@ extend Infraclass::VmHelpers
 
 package 'dmidecode'
 
-include_recipe "virtualbox-install::default"
-include_recipe "virtualbox-install::systemservice"
-include_recipe "virtualbox-install::webportal"
+include_recipe "virtualbox::default"
+include_recipe "virtualbox::systemservice"
+include_recipe "virtualbox::webportal"
 
 Chef::Log.info("Install VBox, Vagrant and Docker")
 vagrant 'Vagrant'
