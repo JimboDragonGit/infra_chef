@@ -63,7 +63,7 @@ vagrant 'Vagrant'
 
 # include_recipe "infraClass::genericinfo"
 
-%w('net-ping', 'chef-provisioning', 'chef-provisioning-vagrant').each do |gem_package|
+%w(net-ping chef-provisioning chef-provisioning-vagrant).each do |gem_package|
   chef_gem gem_package do
     compile_time true
   end
@@ -72,12 +72,12 @@ end
 Chef::Log.info("Install Adding require images")
 Chef::Log.info("Install Dropbox")
 
-vboxprovider = VBoxProvider.new("zentyal_vbox_provider")
-prod_env = Environment.new("prod", vboxprovider)
-test_env = Environment.new("test", vboxprovider)
+vboxprovider = Infraclass::VboxproviderHelpers::VBoxProvider.new("zentyal_vbox_provider")
+prod_env = Infraclass::EnvironmentHelpers::Environment.new("prod", vboxprovider)
+test_env = Infraclass::EnvironmentHelpers::Environment.new("test", vboxprovider)
 
 Chef::Log.info("Adding VMs to environment")
-prod_env.addVM(node['infra_chef']['vms']['chefserver'])
+# prod_env.addVM(node['infra_chef']['vms']['chefserver'])
 
 Chef::Log.info("Building Chef server")
 
