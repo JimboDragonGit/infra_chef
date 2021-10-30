@@ -22,3 +22,4 @@ supports ubuntu
 supports debian
 
 depends 'infraClass'
+depends 'chef_workstation_initialize'

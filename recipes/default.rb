@@ -24,4 +24,5 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-include_recipe "#{cookbook_name}::zentyal"
+include_recipe "#{cookbook_name}::#{node["platform"]}"
+# Chef::Log.warn("#{node["platform"]}")

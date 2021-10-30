@@ -7,10 +7,15 @@
 name 'infra_chef'
 
 # Where to find external cookbooks:
+default_source :chef_repo, ".." do |s|
+ s.preferred_for "virtualbox"
+end
+
+default_source :chef_repo, "../../libraries"
+
 default_source :supermarket
 
 # run_list: chef-client will run these recipes in the order specified.
 run_list 'infra_chef::default'
 
 # Specify a custom source for a single cookbook:
-cookbook 'infra_chef', path: '.'

@@ -26,7 +26,9 @@
 
 # frozen_string_literal: true
 source 'https://supermarket.chef.io'
-cookbook 'infraClass', '~> 0.1.0', github: "jimbodragon/infraClass"
-cookbook 'virtualbox', '~> 4.0.0', github: "jimbodragon/virtualbox"
+# cookbook 'infraClass', '~> 0.1.0', github: "jimbodragon/infraClass"
+cookbook 'infraClass', '~> 0.1.0', path: "../../libraries/infraClass"
+cookbook 'virtualbox', '~> 4.0.0', path: "../virtualbox"
+cookbook 'chef_workstation_initialize', '~> 0.1.0', path: "../chef_workstation_initialize"
 
 metadata
