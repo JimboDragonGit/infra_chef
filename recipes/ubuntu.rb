@@ -51,8 +51,6 @@ extend Infraclass::VmHelpers
 
 package 'dmidecode'
 
-include_recipe "chef_workstation_initialize"
-
 include_recipe "virtualbox::default"
 include_recipe "virtualbox::systemservice"
 include_recipe "virtualbox::webportal"
