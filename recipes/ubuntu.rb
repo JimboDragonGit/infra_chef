@@ -47,7 +47,7 @@
 # extend Infraclass::VsphereproviderHelpers
 # extend Infraclass::VspherevmHelpers
 
-extend Infraclass::VmHelpers
+extend Infraclass
 
 package 'dmidecode'
 
