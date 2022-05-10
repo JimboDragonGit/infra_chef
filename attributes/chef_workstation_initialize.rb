@@ -30,3 +30,5 @@ default['infra_chef']['cron'] = {
 
 default['chef-git-server']['compile_time'] = false
 # default['chef-git-server']['repositories'] = [ node['infra_chef']['project_name'], "#{node['infra_chef']['project_name']}_generator", "infra_chef", "initialize_chef_repo" ]
+
+default['virtualbox']['default_interface'] = "eth0"
