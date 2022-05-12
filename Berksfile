@@ -28,7 +28,7 @@
 source 'https://supermarket.chef.io'
 cookbook 'infraClass', '~> 0.1.0', github: "jimbodragon/infraClass"
 cookbook 'virtualbox', '~> 0.1.0', github: "jimbodragon/virtualbox"
-cookbook 'chef_workstation_initialize', '~> 0.1.0', git: "git@github.com/jimbodragon/chef_workstation_initialize"
+cookbook 'chef_workstation_initialize', '~> 0.1.0', git: "git@github.com:jimbodragon/chef_workstation_initialize.git"
 # cookbook 'infraClass', '~> 0.1.0', path: "../../libraries/infraClass"
 # cookbook 'virtualbox', '~> 4.0.0', path: "../virtualbox"
 # cookbook 'chef_workstation_initialize', '~> 0.1.0', path: "../chef_workstation_initialize"
