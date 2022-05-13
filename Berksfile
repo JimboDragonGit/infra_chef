@@ -26,6 +26,7 @@
 
 # frozen_string_literal: true
 source 'https://supermarket.chef.io'
+cookbook 'chef-git-server', '~> 1.0.0', github: "jimbodragon/chef-git-server"
 cookbook 'infraClass', '~> 0.1.0', github: "jimbodragon/infraClass"
 cookbook 'virtualbox', '~> 4.0.0', github: "jimbodragon/virtualbox"
 cookbook 'chef_workstation_initialize', '~> 0.1.0', git: "git@github.com:jimbodragon/chef_workstation_initialize.git"
