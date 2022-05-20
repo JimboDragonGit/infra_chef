@@ -56,7 +56,7 @@ class ChefService < Infraclass::ServiceHelpers::Service
 
   class Ubuntu_VBox < Infraclass::VboxproviderHelpers::VBoxProvider
     def initialize
-      super("Ubuntu_VBox", "ubuntu-22.04", self)
+      super("Ubuntu_VBox", "ubuntu-22.04")
     end
   end
 
