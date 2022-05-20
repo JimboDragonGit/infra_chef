@@ -59,7 +59,7 @@ end
 
 begin
   include_recipe "#{cookbook_name}::#{node[cookbook_name]["project_name"]}"
-rescue e
-  Chef::Log.warn("#{node["platform"]}")
+rescue Exception => exception
+  Chef::Log.warn("#{node["platform"]}:: #{exception.message}")
   include_recipe "#{cookbook_name}::#{node["platform"]}"
 end
