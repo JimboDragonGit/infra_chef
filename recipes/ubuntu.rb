@@ -49,32 +49,43 @@
 
 extend Infraclass
 
-package 'dmidecode'
-
-include_recipe "virtualbox::default"
-include_recipe "virtualbox::systemservice"
-include_recipe "virtualbox::webportal"
-
-Chef::Log.info("Install VBox, Vagrant and Docker")
-# vagrant 'Vagrant'
-
-# include_recipe "#{cookbook_name}::vagrant"
-# include_recipe "#{cookbook_name}::docker"
-
-# include_recipe "infraClass::genericinfo"
-
-%w(net-ping chef-provisioning chef-provisioning-vagrant).each do |gem_package|
-  chef_gem gem_package do
-    compile_time true
-  end
-end
-
 Chef::Log.info("Install Adding require images")
 Chef::Log.info("Install Dropbox")
 
-vboxprovider = Infraclass::VboxproviderHelpers::VBoxProvider.new("ubuntu_vbox_provider")
-prod_env = Infraclass::EnvironmentHelpers::Environment.new("prod", vboxprovider)
-test_env = Infraclass::EnvironmentHelpers::Environment.new("test", vboxprovider)
+class ChefService < Infraclass::ServiceHelpers::Service
+
+  class Ubuntu_VBox < Infraclass::VboxproviderHelpers::VBoxProvider
+    def initialize
+      super("Ubuntu_VBox", "ubuntu-22.04", self)
+    end
+  end
+
+  class ProdEnv < Infraclass::EnvironmentHelpers::Environment
+    def initialize
+      super("ProdEnv", Ubuntu_VBox.new())
+      AddVM(ChefServer.new())
+    end
+  end
+
+  class TestEnv < ProdEnv
+    def initialize
+      @name = "TestEnv"
+    end
+  end
+
+  class ChefServer < Infraclass::VboxvmHelpers::VBoxVM
+    def initialize
+      super("chefserver", "chefserver")
+    end
+  end
+
+  def initialize
+    super("chefService")
+    AddEnvironment(TestEnv.new())
+  end
+end
+
+chefservice = ChefService.new()
 
 Chef::Log.info("Adding VMs to environment")
 # prod_env.addVM(node['infra_chef']['vms']['chefserver'])
