@@ -8,27 +8,51 @@
 # issues_url 'https://github.com/jimbodragon/infra_chef/issues'
 # source_url 'https://github.com/jimbodragon/infra_chef'
 
-default['infra_chef']['project_name'] = nil
-default['infra_chef']['chef_repo_initialized'] = false
-default['infra_chef']['chef_generator_initialized'] = false
-default['infra_chef']['project_description'] = "Build the chef infrasctructure of #{node['infra_chef']['project_name']}"
-default['infra_chef']['chef_repo_name'] = node['infra_chef']['project_name']
-default['infra_chef']['environments'] = []
-default['infra_chef']['install_dir'] = ::File.join(::Dir.pwd, "chef_repositories")
-default['infra_chef']['initial_command'] = "wget https://raw.githubusercontent.com/jimbodragon/initialize_chef_repo/master/initializator.sh && bash initializator.sh #{node['infra_chef']['project_name']} DR SIT QA Test Dev"
-default['infra_chef']['chef_solo_command'] = "chef-solo --chef-license 'accept' --json-attributes node.json --config solo.rb --override-runlist \"role[#{node['infra_chef']['project_name']}]\""
-default['infra_chef']['cron_chef_solo_command'] = "chef-solo --chef-license 'accept' --config #{::File.join("#{node['infra_chef']['install_dir']}", "solo.rb")} --override-runlist \"role[#{node['infra_chef']['project_name']}]\""
-default['infra_chef']['chef_boostrapped'] = false
-default['infra_chef']['environment'] = "production"
-default['infra_chef']['run_list'] = ["recipe[infra_chef]"]
+default['infra_chef']['project_name'] = "Exemple"
+default['infra_chef']['environments'] = "Production"
+default['infra_chef']['install_dir'] = "/usr/local/chef/repo"
 
-default['infra_chef']['gitinfo'] = nil
-
-default['infra_chef']['cron'] = {
-  "minute": "0,5,10,15,20,25,30,35,40,45,50,55"
-}
-
+default['chef-git-server']['user_data_bag'] = "chef_git_server_user"
+default['chef-git-server']['ssh_keys_data_bag'] = "ssh_keys"
 default['chef-git-server']['compile_time'] = false
-# default['chef-git-server']['repositories'] = [ node['infra_chef']['project_name'], "#{node['infra_chef']['project_name']}_generator", "infra_chef", "initialize_chef_repo" ]
-
 default['virtualbox']['default_interface'] = "eth0"
+
+
+def generate_json_repo_local(type, repository, revision = "master", remote = "origin", submodule_list = nil, additional_remotes = nil)
+  {
+    "type": type,
+    "repository": repository,
+    "revision": revision,
+    "remote": remote,
+    "submodules": submodule_list,
+    "additional_remotes": additional_remotes
+  }
+end
+
+generator_json = generate_json_repo_local("generators", "git@127.0.0.1:#{new_resource.project_name}/#{new_resource.project_name}_generator.git",
+"master", "origin", nil, {"fork_githubproject": "git@github.com:#{new_resource.project_name}/#{new_resource.project_name}_generator.git"})
+
+initialize_json = generate_json_repo_local("scripts", "git@127.0.0.1:#{new_resource.project_name}/#{new_resource.project_name}_initialize.git",
+"master", "origin", nil, {"fork_githubproject": "git@github.com:#{new_resource.project_name}/#{new_resource.project_name}_initialize.git"})
+
+cookbook_json = generate_json_repo_local("cookbooks", "git@127.0.0.1:#{new_resource.project_name}/#{cookbook_name}.git"),
+"master", "origin", nil, {"fork_githubproject": "git@github.com:#{new_resource.project_name}/#{cookbook_name}.git"})
+
+ini_cookbook_json = generate_json_repo_local("scripts", "git@127.0.0.1:#{new_resource.project_name}/initialize_chef_repo.git"),
+"master", "origin", nil, {"fork_githubproject": "git@github.com:#{new_resource.project_name}/initialize_chef_repo.git"})
+
+main_git_repo = generate_json_repo_local(
+  "main_repo",
+  "git@127.0.0.1:#{new_resource.project_name}/#{new_resource.project_name}.git"),
+  "master", "origin", {
+    "#{new_resource.project_name}_generator": generator_json,
+    "#{new_resource.project_name}_initialize": initialize_json,
+    "#{cookbook_name}": cookbook_json,
+    "initialize_chef_repo": ini_cookbook_json
+  },
+  {"fork_githubproject": "git@github.com:#{new_resource.project_name}/#{new_resource.project_name}.git"}
+).stringify_keys!
+
+default['infra_chef']['gitinfo'] = main_git_repo
+
+default['chef-git-server']['repositories'] = [ node['infra_chef']['project_name'], "#{node['infra_chef']['project_name']}_generator", cookbook_name, "initialize_chef_repo" ]
