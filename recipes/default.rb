@@ -45,10 +45,3 @@ auto_chef_repo node[cookbook_name]["project_name"] do
   override_attributes "#{cookbook_name}": node.override[cookbook_name].to_hash, "chef-git-server": node.override['chef-git-server'].to_hash
   compile_time node['chef-git-server']['compile_time']
 end
-
-begin
-  include_recipe "#{cookbook_name}::#{node[cookbook_name]["project_name"]}"
-rescue Exception => exception
-  Chef::Log.warn("#{node["platform"]}")
-  include_recipe "#{cookbook_name}::#{node["platform"]}"
-end
