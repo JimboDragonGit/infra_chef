@@ -1,3 +1,13 @@
+# name 'Template file for infra_chef'
+# maintainer 'Jimbo Dragon'
+# maintainer_email 'jimbo_dragon@hotmail.com'
+# license 'MIT'
+# description 'Template file for infra_chef'
+# version '0.1.0'
+# chef_version '>= 16.6.14'
+# issues_url 'https://github.com/jimbodragon/infra_chef/issues'
+# source_url 'https://github.com/jimbodragon/infra_chef'
+
 #
 # Cookbook:: infra_chef
 # Recipe:: ubuntu
@@ -52,40 +62,34 @@ extend Infraclass
 Chef::Log.info("Install Adding require images")
 Chef::Log.info("Install Dropbox")
 
-class ChefService < Infraclass::ServiceHelpers::Service
+class ChefService<%= @new_resource.environment %> < Infraclass::ServiceHelpers::Service
 
-  class Ubuntu_VBox < Infraclass::VboxproviderHelpers::VBoxProvider
+  class Ubuntu_VBox<%= @new_resource.environment %> < Infraclass::VboxproviderHelpers::VBoxProvider
     def initialize
-      super("Ubuntu_VBox", "ubuntu-22.04")
+      super("Ubuntu_VBox<%= @new_resource.environment %>", "ubuntu-22.04")
     end
   end
 
-  class ProdEnv < Infraclass::EnvironmentHelpers::Environment
+  class ChefServer<%= @new_resource.environment %> < Infraclass::VboxvmHelpers::VBoxVM
     def initialize
-      super("ProdEnv", Ubuntu_VBox.new())
-      AddVM(ChefServer.new())
+      super("chefserver<%= @new_resource.environment %>", "chefserver<%= @new_resource.environment %>")
     end
   end
 
-  class TestEnv < ProdEnv
+  class <%= @new_resource.environment %>Environment < Infraclass::EnvironmentHelpers::Environment
     def initialize
-      @name = "TestEnv"
-    end
-  end
-
-  class ChefServer < Infraclass::VboxvmHelpers::VBoxVM
-    def initialize
-      super("chefserver", "chefserver")
+      super(<%= @new_resource.environment %>Environment", Ubuntu_VBox<%= @new_resource.environment %>.new())
+      AddVM(ChefServer<%= @new_resource.environment %>.new())
     end
   end
 
   def initialize
-    super("chefService")
-    AddEnvironment(TestEnv.new())
+    super("chefService<%= @new_resource.environment %>")
   end
 end
 
-chefservice = ChefService.new()
+chefservice = ChefService<%= @new_resource.environment %>.new()
+#chefservice.loadservice()
 
 Chef::Log.info("Adding VMs to environment")
 # prod_env.addVM(node['infra_chef']['vms']['chefserver'])
