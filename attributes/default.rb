@@ -15,18 +15,13 @@ default["infra_chef"]["gitinfo"] = {
       "type": "generators",
       "repository": "#{node['chef-git-server']['home']}/#{node['infra_chef']['project_name']}_generator.git",
       "revision": "master",
-      "remote": "origin",
-      "submodules": null,
-      "additional_remotes": null
+      "remote": "origin"
     },
     "infra_chef": {
       "type": "cookbooks",
       "repository": "#{node['chef-git-server']['home']}/infra_chef.git",
       "revision": "master",
-      "remote": "origin",
-      "submodules": null,
-      "additional_remotes": null
+      "remote": "origin"
     }
-  },
-  "additional_remotes": null
+  }
 }
