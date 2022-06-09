@@ -1,31 +1,40 @@
 
-Chef::Application.fatal!("Must have the attribute infra_chef => project_name") if node['infra_chef']['project_name'] == ""
-Chef::Application.fatal!("Must have the attribute infra_chef => project_name") if node['infra_chef']['install_dir'] == ""
+Chef::Application.fatal!("Must have the attribute <%= cookbook_name %> => project_name") if node['<%= cookbook_name %>']['project_name'] == ""
+Chef::Application.fatal!("Must have the attribute <%= cookbook_name %> => project_name") if node['<%= cookbook_name %>']['install_dir'] == ""
 
-default["<%= cookbook_name %>"]["initial_command"] = "wget https://raw.githubusercontent.com/#{node['infra_chef']['project_name']}/initialize_chef_repo/master/initializator.sh && bash initializator.sh #{node['infra_chef']['project_name']} #{node['infra_chef']['environments']}"
-default["<%= cookbook_name %>"]["cron_chef_solo_command"] = "chef-solo --chef-license 'accept' --config #{::File.join(node['infra_chef']['install_dir'], "solo.rb")} --override-runlist \"role[#{node['infra_chef']['project_name']}]\" > /var/log/chef_client.log"
+default["<%= cookbook_name %>"]["initial_command"] = "wget https://raw.githubusercontent.com/#{node['<%= cookbook_name %>']['project_name']}/initialize_chef_repo/master/initializator.sh && bash initializator.sh #{node['<%= cookbook_name %>']['project_name']} #{node['<%= cookbook_name %>']['environments']}"
+default["<%= cookbook_name %>"]["cron_chef_solo_command"] = "chef-solo --chef-license 'accept' --config #{::File.join(node['<%= cookbook_name %>']['install_dir'], "solo.rb")} --override-runlist \"role[#{node['<%= cookbook_name %>']['project_name']}]\" > /var/log/chef_client.log"
 
 <% if node[cookbook_name]["gitinfo"] %>
 default["<%= cookbook_name %>"]["gitinfo"] = <%= JSON.pretty_generate(node[cookbook_name]["gitinfo"]) %>
 <% else %>
 default["<%= cookbook_name %>"]["gitinfo"] = {
   "type": "",
-  "repository": "#{node['chef-git-server']['user']}@#{node["ipaddress"]}:#{node['chef-git-server']['home']}/#{node['infra_chef']['project_name']}.git",
+  "repository": "#{node['chef-git-server']['user']}@#{node["ipaddress"]}:#{node['chef-git-server']['home']}/#{node['<%= cookbook_name %>']['project_name']}.git",
   "revision": "master",
   "remote": "origin",
   "submodules": {
-    "#{node['infra_chef']['project_name']}_generator": {
+    "#{node['<%= cookbook_name %>']['project_name']}_generator": {
       "type": "generators",
-      "repository": "#{node['chef-git-server']['user']}@#{node["ipaddress"]}:#{node['chef-git-server']['home']}/#{node['infra_chef']['project_name']}_generator.git",
+      "repository": "#{node['chef-git-server']['user']}@#{node["ipaddress"]}:#{node['chef-git-server']['home']}/#{node['<%= cookbook_name %>']['project_name']}_generator.git",
       "revision": "master",
       "remote": "origin"
     },
-    "#{node['infra_chef']['project_name']}_infra_chef": {
+    <% if cookbook_name.include?(node[cookbook_name]['project_name']) %>
+    "<%= cookbook_name %>": {
       "type": "cookbooks",
-      "repository": "#{node['chef-git-server']['user']}@#{node["ipaddress"]}:#{node['chef-git-server']['home']}/#{node['infra_chef']['project_name']}_infra_chef.git",
+      "repository": "#{node['chef-git-server']['user']}@#{node["ipaddress"]}:#{node['chef-git-server']['home']}/#{cookbook_name}.git",
       "revision": "master",
       "remote": "origin"
     }
+    <% else %>
+    "#{node['<%= cookbook_name %>']['project_name']}_#{cookbook_name}": {
+      "type": "cookbooks",
+      "repository": "#{node['chef-git-server']['user']}@#{node["ipaddress"]}:#{node['chef-git-server']['home']}/#{node['<%= cookbook_name %>']['project_name']}_#{cookbook_name}.git",
+      "revision": "master",
+      "remote": "origin"
+    }
+    <% end %>
   }
 }
 <% end %>
