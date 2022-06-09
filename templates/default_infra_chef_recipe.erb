@@ -35,46 +35,46 @@
 # THE SOFTWARE.
 
 auto_chef_repo node[cookbook_name]["project_name"] do
-<% if not node[cookbook_name]["project_description"] %>
+<% if not node[cookbook_name]["project_description"].nil? %>
   project_description node[cookbook_name]["project_description"]
 <% end %>
-<% if not node[cookbook_name]["environments"] %>
+<% if not node[cookbook_name]["environments"].nil? %>
   environments node[cookbook_name]["environments"]
 <% end %>
-<% if not node[cookbook_name]["environments"] %>
+<% if not node[cookbook_name]["environments"].nil? %>
   run_for_type node[cookbook_name]["run_for_type"]
 <% end %>
-<% if not node[cookbook_name]["initial_command"] %>
+<% if not node[cookbook_name]["initial_command"].nil? %>
   initial_command node[cookbook_name]["initial_command"]
 <% end %>
-<% if not node[cookbook_name]["cron_chef_solo_command"] %>
+<% if not node[cookbook_name]["cron_chef_solo_command"].nil? %>
   cron_chef_solo_command node[cookbook_name]["cron_chef_solo_command"]
 <% end %>
-<% if not node[cookbook_name]["install_dir"] %>
+<% if not node[cookbook_name]["install_dir"].nil? %>
   install_dir node[cookbook_name]["install_dir"]
 <% end %>
-<% if not node[cookbook_name]["chef_boostrapped"] %>
+<% if not node[cookbook_name]["chef_boostrapped"].nil? %>
   chef_boostrapped node[cookbook_name]["chef_boostrapped"]
 <% end %>
-<% if not node[cookbook_name]["environment"] %>
+<% if not node[cookbook_name]["environment"].nil? %>
   environment node[cookbook_name]["environment"]
 <% end %>
-<% if not node[cookbook_name]["gitinfo"] %>
+<% if not node[cookbook_name]["gitinfo"].nil? %>
   gitinfo node[cookbook_name]["gitinfo"]
 <% end %>
-<% if not node[cookbook_name]["cron"] %>
+<% if not node[cookbook_name]["cron"].nil? %>
   cron node[cookbook_name]["cron"]
 <% end %>
-<% if not node[cookbook_name]["default_attributes"] %>
-  default_attributes "#{cookbook_name}": node[cookbook_name]["default_attributes"].to_hash
+<% if not node[cookbook_name]["default_attributes"].nil? %>
+  #default_attributes "#{cookbook_name}": node[cookbook_name]["default_attributes"].to_hash
 <% end %>
-<% if not node[cookbook_name]["override_attributes"] %>
-  override_attributes "#{cookbook_name}": node[cookbook_name]["override_attributes"].to_hash
+<% if not node[cookbook_name]["override_attributes"].nil? %>
+  #override_attributes "#{cookbook_name}": node[cookbook_name]["override_attributes"].to_hash
 <% end %>
-<% if not node[cookbook_name]["project_description"] %>
+<% if not node[cookbook_name]["project_description"].nil? %>
   compile_time node[cookbook_name]['compile_time']
 <% end %>
-<% if not node[cookbook_name]["action"] %>
+<% if not node[cookbook_name]["action"].nil? %>
   action node[cookbook_name]['action']
 <% end %>
 end
