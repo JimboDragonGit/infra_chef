@@ -7,19 +7,19 @@ default["infra_chef"]["cron_chef_solo_command"] = "chef-solo --chef-license 'acc
 
 default["infra_chef"]["gitinfo"] = {
   "type": "",
-  "repository": "#{node['chef-git-server']['home']}/#{node['infra_chef']['project_name']}.git",
+  "repository": "#{node['chef-git-server']['user']}@#{node["IP"]}:#{node['chef-git-server']['home']}/#{node['infra_chef']['project_name']}.git",
   "revision": "master",
   "remote": "origin",
   "submodules": {
     "#{node['infra_chef']['project_name']}_generator": {
       "type": "generators",
-      "repository": "#{node['chef-git-server']['home']}/#{node['infra_chef']['project_name']}_generator.git",
+      "repository": "#{node['chef-git-server']['user']}@#{node["IP"]}:#{node['chef-git-server']['home']}/#{node['infra_chef']['project_name']}_generator.git",
       "revision": "master",
       "remote": "origin"
     },
     "#{node['infra_chef']['project_name']}_infra_chef": {
       "type": "cookbooks",
-      "repository": "#{node['chef-git-server']['home']}/#{node['infra_chef']['project_name']}_infra_chef.git",
+      "repository": "#{node['chef-git-server']['user']}@#{node["IP"]}:#{node['chef-git-server']['home']}/#{node['infra_chef']['project_name']}_infra_chef.git",
       "revision": "master",
       "remote": "origin"
     }
