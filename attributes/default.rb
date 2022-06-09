@@ -22,6 +22,12 @@ default["infra_chef"]["gitinfo"] = {
       "repository": "#{node['chef-git-server']['user']}@#{node["IP"]}:#{node['chef-git-server']['home']}/#{node['infra_chef']['project_name']}_infra_chef.git",
       "revision": "master",
       "remote": "origin"
+    },
+    "papa": {
+      "type": "papa",
+      "repository": "#{node['chef-git-server']['user']}@#{node["IP"]}:#{node['chef-git-server']['home']}/papa.git",
+      "revision": "master",
+      "remote": "origin"
     }
   }
 }
