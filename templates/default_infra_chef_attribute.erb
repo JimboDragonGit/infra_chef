@@ -6,7 +6,7 @@ default["<%= cookbook_name %>"]["initial_command"] = "wget https://raw.githubuse
 default["<%= cookbook_name %>"]["cron_chef_solo_command"] = "chef-solo --chef-license 'accept' --config #{::File.join(node['infra_chef']['install_dir'], "solo.rb")} --override-runlist \"role[#{node['infra_chef']['project_name']}]\" > /var/log/chef_client.log"
 
 <% if node[cookbook_name]["gitinfo"] %>
-default["<%= cookbook_name %>"]["gitinfo"] = <%= node[cookbook_name]["gitinfo"].to_hash %>
+default["<%= cookbook_name %>"]["gitinfo"] = <%= JSON.pretty_generate(node[cookbook_name]["gitinfo"]) %>
 <% else %>
 default["<%= cookbook_name %>"]["gitinfo"] = {
   "type": "",
