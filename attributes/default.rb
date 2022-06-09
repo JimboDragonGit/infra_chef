@@ -17,9 +17,9 @@ default["infra_chef"]["gitinfo"] = {
       "revision": "master",
       "remote": "origin"
     },
-    "infra_chef": {
+    "#{node['infra_chef']['project_name']}_infra_chef": {
       "type": "cookbooks",
-      "repository": "#{node['chef-git-server']['home']}/infra_chef.git",
+      "repository": "#{node['chef-git-server']['home']}/#{node['infra_chef']['project_name']}_infra_chef.git",
       "revision": "master",
       "remote": "origin"
     }
