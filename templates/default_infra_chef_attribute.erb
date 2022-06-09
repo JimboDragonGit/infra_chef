@@ -5,8 +5,8 @@ Chef::Application.fatal!("Must have the attribute <%= @new_cookbook_name %> => p
 default["<%= @new_cookbook_name %>"]["initial_command"] = "wget https://raw.githubusercontent.com/#{node['<%= @new_cookbook_name %>']['project_name']}/initialize_chef_repo/master/initializator.sh && bash initializator.sh #{node['<%= @new_cookbook_name %>']['project_name']} #{node['<%= @new_cookbook_name %>']['environments']}"
 default["<%= @new_cookbook_name %>"]["cron_chef_solo_command"] = "chef-solo --chef-license 'accept' --config #{::File.join(node['<%= @new_cookbook_name %>']['install_dir'], "solo.rb")} --override-runlist \"role[#{node['<%= @new_cookbook_name %>']['project_name']}]\" > /var/log/chef_client.log"
 
-<% if node[@new_cookbook_name]["gitinfo"] %>
-default["<%= @new_cookbook_name %>"]["gitinfo"] = <%= JSON.pretty_generate(node[@new_cookbook_name]["gitinfo"]) %>
+<% if node[cookbook_name]["gitinfo"] %>
+default["<%= @new_cookbook_name %>"]["gitinfo"] = <%= JSON.pretty_generate(node[cookbook_name]["gitinfo"]) %>
 <% else %>
 default["<%= @new_cookbook_name %>"]["gitinfo"] = {
   "type": "",
