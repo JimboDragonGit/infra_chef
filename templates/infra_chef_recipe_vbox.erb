@@ -76,7 +76,7 @@ class ChefService<%= @new_resource.environment %> < Infraclass::ServiceHelpers::
     end
   end
 
-  class <%= @new_resource.environment[0].uppercase %><%= @new_resource.environment[1..-1].downcase %>Environment < Infraclass::EnvironmentHelpers::Environment
+  class <%= @new_resource.environment[0].upcase %><%= @new_resource.environment[1..-1].downcase %>Environment < Infraclass::EnvironmentHelpers::Environment
     def initialize
       super(<%= @new_resource.environment %>Environment", Ubuntu_VBox<%= @new_resource.environment %>.new())
       AddVM(ChefServer<%= @new_resource.environment %>.new())
