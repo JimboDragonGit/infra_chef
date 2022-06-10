@@ -62,24 +62,24 @@ extend Infraclass
 Chef::Log.info("Install Adding require images")
 Chef::Log.info("Install Dropbox")
 
-class ChefService<%= @new_resource.environment %> < Infraclass::ServiceHelpers::Service
+class ChefService<%= @new_resource.environment[0].upcase %><%= @new_resource.environment[1..-1].downcase %> < Infraclass::Service
 
-  class Ubuntu_VBox<%= @new_resource.environment %> < Infraclass::VboxproviderHelpers::VBoxProvider
+  class Ubuntu_VBox<%= @new_resource.environment[0].upcase %><%= @new_resource.environment[1..-1].downcase %> < Infraclass::VBox::VBoxProvider
     def initialize
       super("Ubuntu_VBox<%= @new_resource.environment %>", "ubuntu-22.04")
     end
   end
 
-  class ChefServer<%= @new_resource.environment %> < Infraclass::VboxvmHelpers::VBoxVM
+  class ChefServer<%= @new_resource.environment %> < Infraclass::VBox::VBoxVM
     def initialize
       super("chefserver<%= @new_resource.environment %>", "chefserver<%= @new_resource.environment %>")
     end
   end
 
-  class <%= @new_resource.environment[0].upcase %><%= @new_resource.environment[1..-1].downcase %>Environment < Infraclass::EnvironmentHelpers::Environment
+  class <%= @new_resource.environment[0].upcase %><%= @new_resource.environment[1..-1].downcase %>Environment < Infraclass::Environment
     def initialize
-      super("<%= @new_resource.environment %>Environment", Ubuntu_VBox<%= @new_resource.environment %>.new())
-      AddVM(ChefServer<%= @new_resource.environment %>.new())
+      super("<%= @new_resource.environment %>Environment", Ubuntu_VBox<%= @new_resource.environment[0].upcase %><%= @new_resource.environment[1..-1].downcase %>.new())
+      AddVM(ChefServer<%= @new_resource.environment[0].upcase %><%= @new_resource.environment[1..-1].downcase %>.new())
     end
   end
 
@@ -88,7 +88,7 @@ class ChefService<%= @new_resource.environment %> < Infraclass::ServiceHelpers::
   end
 end
 
-chefservice = ChefService<%= @new_resource.environment %>.new()
+chefservice = ChefService<%= @new_resource.environment[0].upcase %><%= @new_resource.environment[1..-1].downcase %>.new()
 #chefservice.loadservice()
 
 Chef::Log.info("Adding VMs to environment")
