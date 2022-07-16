@@ -1,0 +1,118 @@
+<%
+require 'fileutils'
+require 'mixlib/shellout'
+require 'json'
+require 'yaml'
+
+def project_name
+  File.basename(kitchen_root)
+end
+
+def kitchen_root
+  File.dirname(__FILE__)
+end
+
+def is_solo?
+  solo_config = Mixlib::ShellOut.new("knife config show solo --format pp")
+  solo_config.run_command
+  Hash.new(solo_config.stdout)['solo']
+end
+
+def boostrapped?
+  search_cmd = 'knife search node name:$(hostname) --format json'
+  search_cmd = "#{search_cmd} -z" if is_solo?
+
+  node_info = Mixlib::ShellOut.new(search_cmd)
+  node_info.run_command
+  result = JSON.parse(node_info.stdout)
+  rows = result['rows']
+  while rows.count > 0 
+    first_row = rows.pop
+    unless first_row['run_list'].nil?
+      get_runlist =  first_row['run_list']
+    end
+  end
+
+  ! get_runlist.nil?
+end
+
+def berks_vendor
+  Mixlib::ShellOut.new("berks install").run_command
+  Mixlib::ShellOut.new("berks vendor").run_command
+end
+
+def git_submodule
+  Mixlib::ShellOut.new("git submodule init && git submodule update").run_command
+end
+
+def bootstrap_self
+  unless boostrapped?
+    bootstrap_options = "-N $(hostname)"
+    if is_solo?
+      bootstrap_cmd = "sudo chef-client #{bootstrap_options} --runlist #{project_name} -c solo.rb -z"
+    else
+      bootstrap_cmd = "knife bootstrap #{bootstrap_options} --policy-group #{project_name} --policy-name #{project_name} $(hostname)"
+    end
+    berks_vendor
+    create_node = Mixlib::ShellOut.new(bootstrap_cmd, live_stream: $stdout)
+    create_node.run_command
+  end
+end
+bootstrap_self
+%>
+---
+provisioner:
+  name: chef_zero
+  always_update_cookbooks: true
+  kitchen_root: <%= kitchen_root %>
+  encrypted_data_bag_secret_key_path:
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: test-<%= project_name %>-vagrant-ubuntu
+    driver:
+      name: vagrant
+      box: bento/ubuntu-20.04
+      network:
+      - ["forwarded_port", {guest: 80, host: 8880}]
+      - ["forwarded_port", {guest: 443, host: 4430}]
+  - name: production-chefserver-vagrant-ubuntu
+    driver:
+      name: vagrant
+      box: bento/ubuntu-20.04
+      hostname: chef.<%= project_name %>.qc.to
+      domain: <%= project_name %>.qc.to
+      network:
+      - ["forwarded_port", {guest: 443, host: 4431}]
+  - name: test-chefserver-docker-ubuntu
+    driver:
+      name: dokken
+      image: debian
+    provisioner:
+      name: dokken
+    transport:
+      name: dokken
+    intermediate_instructions:
+      - RUN /usr/bin/apt-get update
+      - RUN /usr/bin/apt-get install lsb_release
+      - RUN mkdir -p /opt/kitchen
+      - COPY . /opt/kitchen
+      - WORKDIR /opt/kitchen
+    ports:
+    - container_port:
+      - host_ip: 127.0.0.1
+      - host_port: 4431
+
+suites:
+  - name: default
+    includes:
+        - test-<%= project_name %>-vagrant-ubuntu
+    attributes:
+  - name: chefserver
+    named_run_list: chefserver
+    attributes:
+    includes:
+      - test-chefserver-docker-ubuntu
+      - production-chefserver-vagrant-ubuntu

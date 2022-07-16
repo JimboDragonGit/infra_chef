@@ -24,10 +24,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-auto_chef_repo node[cookbook_name]["project_name"] do
-  initial_command node[cookbook_name]["initial_command"]
-  cron_chef_solo_command node[cookbook_name]["cron_chef_solo_command"]
-  install_dir node[cookbook_name]["install_dir"]
-  gitinfo node[cookbook_name]["gitinfo"]
-  compile_time node['chef-git-server']['compile_time']
-end
+extend ChefWorkstationInitialize::WorkstationHelpers
+
+generate_kitchen('chefserver-production')
