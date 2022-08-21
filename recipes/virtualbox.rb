@@ -4,16 +4,12 @@
 #
 # Copyright:: 2022, The Authors, All Rights Reserved.
 
-selected_one = 'patatae'
-node['network']['interfaces'].each do |k, v|
+node.override['virtualbox']['default_interface'] = node['network']['interfaces'].each do |k, v|
     if v['type'] == 'eth'
-        selected_one = k
-        return
+      return v['type']
     end
-end
-node.override['virtualbox']['default_interface'] = selected_one
+  end
 
 include_recipe 'virtualbox::default'
-include_recipe 'virtualbox::systemservice'
 include_recipe 'virtualbox::webportal'
 include_recipe 'vagrant'
