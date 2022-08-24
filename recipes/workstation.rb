@@ -6,4 +6,4 @@
 
 extend ChefWorkstationInitialize::WorkstationHelpers
 
-workstation
+workstation.run_action :create

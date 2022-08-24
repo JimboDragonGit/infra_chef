@@ -26,4 +26,4 @@
 
 extend ChefWorkstationInitialize::WorkstationHelpers
 
-generate_kitchen('chefserver-production')
+generate_kitchen('chefserver')

@@ -32,4 +32,4 @@ policy_group_path                    File.join(current_dir, 'policy_group')
 policy_path                          File.join(current_dir, 'policies')
 role_path                            File.join(current_dir, 'roles')
 
-Dir.mkdir(File.join(current_dir, 'logs')) if not Dir.exist?(File.join(current_dir, 'logs'))
+Dir.mkdir(File.join(current_dir, 'logs')) unless Dir.exist?(File.join(current_dir, 'logs'))

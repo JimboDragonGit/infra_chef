@@ -252,23 +252,32 @@ cookbook_path [
 data_bags_path                       File.join(current_dir, 'data_bags')
 environment_path                     File.join(current_dir, 'environments')
 log_level                            :info
-node_name                            '<%= @new_resource.project_name %>_workstation'
+log_location                         File.join(File.join(current_dir, 'logs'), '<%= @new_resource.user %>.knife.log')
+node_name                            '<%= @new_resource.user %>'
 node_path                            File.join(current_dir, 'nodes')
 policy_group_path                    File.join(current_dir, 'policy_group')
 policy_path                          File.join(current_dir, 'policies')
 role_path                            File.join(current_dir, 'roles')
 
-# if File.basename().eql?('chef-cli') || File.basename().eql?('knife')
-#   case ARGV[0].to_s
-#   when 'generate'
-#     puts "Usind own generator"
-#     chefcli.generator_cookbook "#{knife[:chef_repo_path]}/generators/jimbo_generator"
-#     chefcli.generator.copyright_holder "Jimbo Dragon"
-#     chefcli.generator.license   "mit"
-#     chefcli.generator.email     "jimbo_dragon@hotmail.com"
-#   when 'supermarket'
-#     puts "Editing supermarket"
-#     node_name 'jprovencher'
-#     client_key File.join(knife[:chef_repo_path], '.chef/jprovencher.pem')
-#   end
-# end
+# log_location             STDOUT
+client_key               "#{current_dir}/<%= @new_resource.user %>.pem"
+chef_server_url          "https://chef.jimbodragon.qc.to/organizations/<%= @new_resource.project_name %>"
+solo true
+
+if File.basename().eql?('chef-cli') || File.basename().eql?('knife')
+  case ARGV[0].to_s
+  when 'generate'
+    generator_path = File.join(File.join(knife[:chef_repo_path], 'generators'), '<%= @new_resource.project_name %>_generator')
+    if File.exist?(generator_path)
+      puts "Using own generator"
+      chefcli.generator_cookbook "#{knife[:chef_repo_path]}/generators/<%= @new_resource.project_name %>"
+      chefcli.generator.copyright_holder "Jimbo Dragon"
+      chefcli.generator.license   "mit"
+      chefcli.generator.email     "jimbo_dragon@hotmail.com"
+    end
+  when 'supermarket'
+    puts "Editing supermarket"
+    node_name 'jprovencher'
+    client_key File.join(knife[:chef_repo_path], '.chef/jprovencher.pem')
+  end
+end
