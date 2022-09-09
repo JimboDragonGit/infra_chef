@@ -28,7 +28,5 @@
 
 # include_recipe 'docker-engine'
 
-docker_service 'default' do
-  group 'docker'
-  action [:create, :start]
-end
+extend ChefWorkstationInitialize::WorkstationHelpers
+auto_repo :install_docker

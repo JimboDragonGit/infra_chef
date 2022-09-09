@@ -4,6 +4,5 @@
 #
 # Copyright:: 2022, The Authors, All Rights Reserved.
 
-include_recipe 'virtualbox::default'
-include_recipe 'virtualbox::webportal'
-include_recipe 'vagrant'
+extend ChefWorkstationInitialize::WorkstationHelpers
+auto_repo :install_virtualbox

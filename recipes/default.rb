@@ -25,5 +25,4 @@
 # THE SOFTWARE.
 
 extend ChefWorkstationInitialize::WorkstationHelpers
-
-generate_kitchen('chefserver')
+auto_repo :start_chefserver

@@ -22,3 +22,14 @@ supports ubuntu
 supports debian
 
 depends 'chef_workstation_initialize'
+
+# depends 'infraClass'
+
+depends 'chef-git-server'
+depends 'virtualbox'
+depends 'vagrant'
+depends 'docker'
+depends 'docker-ce'
+depends 'docker-engine'
+depends 'chef-ingredient'
+# depends 'codenamephp_workstation_chef'

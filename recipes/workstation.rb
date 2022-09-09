@@ -5,5 +5,4 @@
 # Copyright:: 2022, The Authors, All Rights Reserved.
 
 extend ChefWorkstationInitialize::WorkstationHelpers
-
-workstation.run_action :create
+auto_repo :create
