@@ -1,7 +1,7 @@
 current_dir = File.dirname(__FILE__)
 require_relative '<%= @workstation.workstation_file %>'
-extend ChefWorkstationInitialize::WorkstationHelpers
-<%= @workstation.chef_solo_options_encode %>
+extend ChefWorkstationInitialize::SelfBootstrapHelpers
+chef_solo_options_encode
 
 if File.basename($PROGRAM_NAME).eql?('chef-cli') || File.basename($PROGRAM_NAME).eql?('knife')
   case ARGV[0].to_s

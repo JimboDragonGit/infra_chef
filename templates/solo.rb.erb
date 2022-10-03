@@ -1,4 +1,4 @@
 current_dir = File.dirname(__FILE__)
 require_relative '<%= @workstation.workstation_file %>'
-extend ChefWorkstationInitialize::WorkstationHelpers
-<%= @workstation.chef_solo_options %>
+extend ChefWorkstationInitialize::SelfBootstrapHelpers
+chef_solo_options
