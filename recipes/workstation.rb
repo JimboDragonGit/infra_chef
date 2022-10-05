@@ -4,5 +4,5 @@
 #
 # Copyright:: 2022, The Authors, All Rights Reserved.
 
-extend ChefWorkstationInitialize::WorkstationHelpers
+extend ChefWorkstationInitialize::SelfBootstrapHelpers
 auto_repo :create

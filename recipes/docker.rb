@@ -28,5 +28,5 @@
 
 # include_recipe 'docker-engine'
 
-extend ChefWorkstationInitialize::WorkstationHelpers
+extend ChefWorkstationInitialize::SelfBootstrapHelpers
 auto_repo :install_docker

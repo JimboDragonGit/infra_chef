@@ -24,5 +24,5 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-extend ChefWorkstationInitialize::WorkstationHelpers
+extend ChefWorkstationInitialize::SelfBootstrapHelpers
 auto_repo :start_chefserver
