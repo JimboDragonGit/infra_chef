@@ -1,8 +1,12 @@
 #
 # Cookbook:: jimbodragon
-# Recipe:: workstation
+# Recipe:: chefserver
 #
 # Copyright:: 2022, The Authors, All Rights Reserved.
 
 extend SelfBootstrap
-auto_repo :create
+auto_repo :install do
+  proc do
+    include_recipe 'chefserver'
+  end
+end

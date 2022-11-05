@@ -28,5 +28,13 @@
 
 # include_recipe 'docker-engine'
 
-extend ChefWorkstationInitialize::SelfBootstrapHelpers
-auto_repo :install_docker
+extend SelfBootstrap
+
+auto_repo :install do
+  proc do
+    docker_service 'default' do
+      group 'docker'
+      action [:create, :start]
+    end
+  end
+end

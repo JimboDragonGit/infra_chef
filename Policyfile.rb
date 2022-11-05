@@ -7,13 +7,17 @@
 name 'infra_chef'
 
 # Where to find external cookbooks:
-default_source :chef_repo, ".." do |s|
- s.preferred_for "virtualbox"
+default_source :supermarket do |market|
+  market.preferred_for 'chef-ingredient'
 end
 
-default_source :chef_repo, "../../libraries"
+default_source :chef_repo, '../..' do |market|
+  market.preferred_for 'chef_workstation_initialize', 'chef-git-server', 'chefserver', 'virtualbox'
+end
 
-default_source :supermarket
+default_source :chef_repo, '../../librairies/' do |market|
+  market.preferred_for 'infraClass'
+end
 
 # run_list: chef-client will run these recipes in the order specified.
 run_list 'infra_chef::default'
