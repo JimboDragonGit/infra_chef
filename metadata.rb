@@ -18,8 +18,8 @@ issues_url 'https://github.com/jimbodragon/infra_chef/issues'
 #
 source_url 'https://github.com/jimbodragon/infra_chef'
 
-supports ubuntu
-supports debian
+supports 'ubuntu'
+supports 'debian'
 
 depends 'chef_workstation_initialize'
 
