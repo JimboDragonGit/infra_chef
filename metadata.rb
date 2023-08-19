@@ -3,7 +3,7 @@ maintainer 'Jimbo Dragon'
 maintainer_email 'jimbo_dragon@hotmail.com'
 license 'MIT'
 description 'Installs/Configures infra_chef'
-version '0.1.1'
+version '0.1.2'
 chef_version '>= 16.6.14'
 
 # The `issues_url` points to the location where issues for this cookbook are

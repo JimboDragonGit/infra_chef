@@ -31,7 +31,7 @@
 extend SelfBootstrap
 
 auto_repo :install do
-  proc do
+  optional_actions do
     docker_service 'default' do
       group 'docker'
       action [:create, :start]
