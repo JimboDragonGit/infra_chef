@@ -3,7 +3,7 @@ maintainer 'Jimbo Dragon'
 maintainer_email 'jimbo_dragon@hotmail.com'
 license 'MIT'
 description 'Installs/Configures infra_chef'
-version '0.1.2'
+version '0.1.3'
 chef_version '>= 16.6.14'
 
 # The `issues_url` points to the location where issues for this cookbook are
@@ -21,7 +21,7 @@ source_url 'https://github.com/jimbodragon/infra_chef'
 supports 'ubuntu'
 supports 'debian'
 
-depends 'chef_workstation_initialize'
+# depends 'chef_workstation_initialize'
 
 # depends 'infraClass'
 
